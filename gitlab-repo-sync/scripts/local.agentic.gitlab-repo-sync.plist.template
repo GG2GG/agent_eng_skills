@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.agentic.gitlab-repo-sync</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/caffeinate</string>
+    <string>-i</string>
+    <string>/bin/bash</string>
+    <string>__REPO_ROOT__/stack/skills/universal/gitlab-repo-sync/scripts/gitlab-repo-sync.sh</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>__REPO_ROOT__</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key>
+    <string>__HOME__</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>AGENTIC_HOME</key>
+    <string>__WORKSPACE__</string>
+    <!-- launchd has no shell env, so the scheduled job reads the token from
+         this file (the install shell's exported token would not be present). -->
+    <key>GITLAB_SYNC_ENV_FILE</key>
+    <string>__ENV_FILE__</string>
+  </dict>
+
+  <!-- Every 3 hours (10800s), measured from load. -->
+  <key>StartInterval</key>
+  <integer>10800</integer>
+
+  <key>StandardOutPath</key>
+  <string>__HOME__/Library/Logs/gitlab-repo-sync/stdout.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>__HOME__/Library/Logs/gitlab-repo-sync/stderr.log</string>
+
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>
